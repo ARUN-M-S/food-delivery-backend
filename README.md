@@ -1,3 +1,3 @@
 ## Creating new ms
 nest new user_ms
--after tesing 
+-rm -rf user_ms/.git => We are using common rep
