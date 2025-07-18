@@ -1,12 +1,13 @@
 import { OnModuleInit,Inject,Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
+import { kafkaTopics } from 'src/constants/kafka-topics';
 
 @Injectable()
 export class UserService implements OnModuleInit {
     constructor(@Inject('USER_SERVICE')private readonly client: ClientKafka) {}
     async onModuleInit() {
-        this.client.subscribeToResponseOf('user.create');
-        this.client.subscribeToResponseOf('user.login');
+       
+        kafkaTopics.forEach(topic => this.client.subscribeToResponseOf(topic));
         await this.client.connect();
       }      
     emitUserCreate(data: any) {
