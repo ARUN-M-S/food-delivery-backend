@@ -8,4 +8,10 @@ export class UserController {
       console.log('🔥 Received Kafka message on topic "user.ping":', message);
       return 'Ping received';
     }
+
+    @MessagePattern('user.login')
+    userLogin(@Payload() message: any) {
+      console.log('🔥 Received Kafka message on topic "user.login":', message);
+      return 'Ping received';
+    }
 }

@@ -10,5 +10,9 @@ export class UserController {
   signup(@Body() data: any) {
     return this.userService.emitUserCreate(data);
   }
+  @Post('login')
+  login(@Body() data: any) {
+    return this.userService.emitUserLogin(data);
+  }
 }
 
