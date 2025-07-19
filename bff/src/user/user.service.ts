@@ -1,5 +1,6 @@
 import { OnModuleInit,Inject,Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
 import { kafkaTopics } from 'src/constants/kafka-topics';
 
 @Injectable()
@@ -11,8 +12,7 @@ export class UserService implements OnModuleInit {
         await this.client.connect();
       }      
     emitUserCreate(data: any) {
-        console.log('📤 BFF sending user.create:', data);
-        return this.client.send('user.create', data);
+        return firstValueFrom(this.client.send('user.create', data));
       }
     emitUserLogin(data:any){
         console.log('📤 BFF sending user.login:', data);

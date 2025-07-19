@@ -18,8 +18,7 @@ export class UserService {
             }
             const Customer = new this.customerModel(data);
             const result = await Customer.save();
-            console.log(result,"Customer")
-            return result
+            return {user:result}
         } catch (error) {
             console.error('❌ User creation failed:', error.message);
             return { error: 'Internal server error' };
