@@ -16,8 +16,12 @@ export class UserController {
     return result.user;
   }
   @Post('login')
-  login(@Body() data: any) {
-    return this.userService.emitUserLogin(data);
+  async login(@Body() data: any) {
+    let result= await this.userService.emitUserLogin(data);
+    if(result.error){
+        throw new BadRequestException(result.error);
+    }
+    return result.user;
   }
 }
 

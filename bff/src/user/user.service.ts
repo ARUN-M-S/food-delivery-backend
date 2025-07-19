@@ -15,7 +15,6 @@ export class UserService implements OnModuleInit {
         return firstValueFrom(this.client.send('user.create', data));
       }
     emitUserLogin(data:any){
-        console.log('📤 BFF sending user.login:', data);
-        return this.client.send('user.login', data);
+        return  firstValueFrom(this.client.send('user.login', data));
     }
 }
