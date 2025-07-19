@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Customer } from '../common/schemas/customer.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
+import { LoginCustomerDto } from 'src/common/dtos/login-customer.dto';
 
 @Injectable()
 export class UserService {
@@ -25,5 +26,18 @@ export class UserService {
             return { error: 'Internal server error' };
         }
        
+    }
+
+    async loginCustomer(data:LoginCustomerDto){
+        try {
+            const existing =  await this.customerModel.find({email:data?.email})
+            if(existing.length==0){
+                return { error: 'Customer Not Found' };
+            }
+        } catch (error) {
+            console.error('❌ User creation failed:', error.message);
+            return { error: 'Internal server error' };
+        }
+        
     }
 }

@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateCustomerDto } from 'src/common/dtos/create-customer.dto';
+import { LoginCustomerDto } from 'src/common/dtos/login-customer.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -13,8 +14,7 @@ export class UserController {
   }
 
   @MessagePattern('user.login')
-  userLogin(@Payload() message: any) {
-    console.log('🔥 Received Kafka message on topic "user.login":', message);
-    return 'Login received';
+  userLogin(@Payload() data: LoginCustomerDto) {
+    return this.userService.loginCustomer(data)
   }
 }
