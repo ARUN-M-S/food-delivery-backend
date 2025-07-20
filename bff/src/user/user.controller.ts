@@ -17,6 +17,7 @@ export class UserController {
     return result.user;
   }
   @Post('login')
+  @Throttle(5, 60)
   async login(@Body() data: any) {
     let result= await this.userService.emitUserLogin(data);
     if(result.error){

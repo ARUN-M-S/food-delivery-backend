@@ -6,14 +6,10 @@ import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
-    ThrottlerModule.forRoot({
-      throttlers: [
-        {
-          ttl: 60,
-          limit: 5,
-        },
-      ],
-    }),
+    ThrottlerModule.forRoot([
+      { ttl: 60000, limit: 5 }, // 60 seconds window, max 5 requests
+    ]),
+    
     ClientsModule.register([
       {
         name: 'USER_SERVICE',
