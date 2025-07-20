@@ -21,7 +21,7 @@ export class UserController {
     if(result.error){
         throw new BadRequestException(result.error);
     }
-    return result.user;
+    return result;
   }
 }
 
