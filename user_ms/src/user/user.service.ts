@@ -43,6 +43,13 @@ export class UserService {
             }
             const payload = { id: existing[0]._id, email: existing[0].email, role: existing[0].role };
             const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+            const user = {
+                id: existing[0]._id,
+                email: existing[0].email,
+                fullName: existing[0].fullName,
+                role: existing[0].role
+              };
+              return { token, user };
         } catch (error) {
             console.error('❌ User creation failed:', error.message);
             return { error: 'Internal server error' };
