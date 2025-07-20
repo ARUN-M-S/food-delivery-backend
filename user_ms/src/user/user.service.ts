@@ -5,6 +5,9 @@ import { Customer } from '../common/schemas/customer.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { LoginCustomerDto } from 'src/common/dtos/login-customer.dto';
+import * as jwt from 'jsonwebtoken';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your_default_secret';
 
 @Injectable()
 export class UserService {
@@ -34,6 +37,12 @@ export class UserService {
             if(existing.length==0){
                 return { error: 'Customer Not Found' };
             }
+            const isPasswordValid = await bcrypt.compare(data.password, existing[0].password);
+            if (!isPasswordValid) {
+              return { error: 'Invalid email or password' };
+            }
+            const payload = { id: existing[0]._id, email: existing[0].email, role: existing[0].role };
+            const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
         } catch (error) {
             console.error('❌ User creation failed:', error.message);
             return { error: 'Internal server error' };
