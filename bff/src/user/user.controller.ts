@@ -2,6 +2,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { Controller, Post, Body } from '@nestjs/common';
 import { UserService } from './user.service';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('user')
 export class UserController {

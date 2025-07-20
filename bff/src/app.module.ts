@@ -1,10 +1,19 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { UserModule } from './user/user.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
-   
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60,
+          limit: 5,
+        },
+      ],
+    }),
     ClientsModule.register([
       {
         name: 'USER_SERVICE',
@@ -20,6 +29,12 @@ import { UserModule } from './user/user.module';
       },
     ]),
     UserModule
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
   
 })
