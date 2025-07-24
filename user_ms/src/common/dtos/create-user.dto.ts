@@ -17,6 +17,9 @@ export class CreateUserDto{
   @IsString()
   address: string;
 
+  @IsString()
+  website?: string;
+
   @IsOptional()
   @IsEnum(UserRole)
   role?: UserRole;
