@@ -56,4 +56,10 @@ export class UserService {
         }
         
     }
+    async updateCustomer(data:CreateCustomerDto){
+        const existing =  await this.customerModel.find({email:data?.email})
+        if(existing.length==0){
+            return { error: 'Customer Not Found' };
+        }
+    }
 }

@@ -19,7 +19,7 @@ export class User extends Document {
   @Prop({ required: true })
   address: string;
 
- @Prop({ required: false })
+  @Prop({ required: false })
   website?: string;
 
   @Prop({ enum: UserRole, default: UserRole.USER })

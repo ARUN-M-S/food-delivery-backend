@@ -17,4 +17,9 @@ export class UserController {
   userLogin(@Payload() data: LoginCustomerDto) {
     return this.userService.loginCustomer(data)
   }
+
+  @MessagePattern('user.update')
+  async handleUpdate(@Payload() data: CreateCustomerDto) {
+    return this.userService.updateCustomer(data);
+  }
 }
